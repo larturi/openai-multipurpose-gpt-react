@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import {
   AssistantPage,
@@ -11,6 +11,7 @@ import {
   TextToAudioPage,
   TranslatePage
 } from '../pages'
+import { DashboardLayout } from '../layouts/DashboardLayout'
 
 export const menuRoutes = [
   {
@@ -81,7 +82,16 @@ export const menuRoutes = [
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: '',
-    children: []
+    element: <DashboardLayout />,
+    children: [
+      ...menuRoutes.map((route) => ({
+        path: route.to,
+        element: route.component
+      })),
+      {
+        path: '',
+        element: <Navigate to='/orthography' />
+      }
+    ]
   }
 ])
