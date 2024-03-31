@@ -16,6 +16,8 @@
 - Nestjs
 - Node 20.9.0
 
+### Generate the .env file based on .env.template file
+
 ## Getting Started
 
 ```bash
