@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 
-export async function* prosConsStreamGeneratorUseCase(prompt: string) {
+export async function* prosConsStreamGeneratorUseCase(prompt: string, abortSignal: AbortSignal) {
   // Idem prosConsStreamUseCase pero con funcion generadora
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
 
@@ -10,7 +10,8 @@ export async function* prosConsStreamGeneratorUseCase(prompt: string) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt }),
+      signal: abortSignal
     })
 
     if (!resp.ok) throw new Error('No se pudo realizar el analisis de pros y contras')
