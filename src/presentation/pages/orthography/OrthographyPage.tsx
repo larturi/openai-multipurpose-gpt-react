@@ -29,10 +29,7 @@ export const OrthographyPage = () => {
     const { ok, errors, message, userScore } = await orthographyUseCase(text)
 
     if (!ok) {
-      setMessages((prev) => [
-        ...prev,
-        { text: 'No se pudo realizar la corrección', isGpt: true }
-      ])
+      setMessages((prev) => [...prev, { text: 'No se pudo realizar la corrección', isGpt: true }])
     } else {
       setMessages((prev) => [
         ...prev,
