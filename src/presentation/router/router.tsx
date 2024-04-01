@@ -7,7 +7,7 @@ import {
   ImageTunningPage,
   OrthographyPage,
   ProsConsPage,
-  ProsConsStreamPage,
+  ProsConsStreamGeneratorPage,
   TextToAudioPage,
   TranslatePage
 } from '../pages'
@@ -33,7 +33,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-water',
     title: 'Como stream',
     description: 'Con stream de mensajes',
-    component: <ProsConsStreamPage />
+    component: <ProsConsStreamGeneratorPage />
   },
   {
     to: '/translate',
