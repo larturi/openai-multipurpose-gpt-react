@@ -5,6 +5,7 @@ interface Props {
   placeholder?: string
   disableCorrections?: boolean
   options: Option[]
+  placeholderSelect?: string
 }
 
 interface Option {
@@ -16,7 +17,8 @@ export const TextMessageBoxSelect = ({
   onSendMessage,
   placeholder,
   disableCorrections = false,
-  options
+  options,
+  placeholderSelect = 'Seleccione'
 }: Props) => {
   const [message, setMessage] = useState('')
   const [selectedOption, setSelectedOption] = useState<string>('')
@@ -25,6 +27,7 @@ export const TextMessageBoxSelect = ({
     event.preventDefault()
 
     if (message.trim().length === 0) return
+    if (selectedOption.trim() === '') return
 
     onSendMessage(message, selectedOption)
     setMessage('')
@@ -56,7 +59,7 @@ export const TextMessageBoxSelect = ({
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
           >
-            <option value=''>Seleccione</option>
+            <option value=''>{placeholderSelect}</option>
             {options.map(({ id, text }) => (
               <option key={id} value={id}>
                 {text}
