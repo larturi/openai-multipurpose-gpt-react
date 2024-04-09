@@ -19,6 +19,7 @@ export const GptMessageImage = ({ imageUrl, alt, onImageSelected }: Props) => {
             className='rounded-xl w-96 h-96 object-cover'
             onClick={() => onImageSelected && onImageSelected(imageUrl)}
           />
+          <p className='max-w-[380px] mt-2'>{alt}</p>
         </div>
       </div>
     </div>
