@@ -59,7 +59,7 @@ export const ProsConsPage = () => {
 
       <TextMessageBox
         onSendMessage={handlePost}
-        placeholder='Escribe aqui lo que deseas...'
+        placeholder='Quien es mejor, Messi o Cristiano?'
         disableCorrections
       />
     </div>

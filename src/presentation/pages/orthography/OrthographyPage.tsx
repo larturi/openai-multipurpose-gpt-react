@@ -77,7 +77,7 @@ export const OrthographyPage = () => {
 
       <TextMessageBox
         onSendMessage={handlePost}
-        placeholder='Escribe aqui lo que deseas...'
+        placeholder='Escribe aqui lo que deseas y lo corregiré...'
         disableCorrections
       />
     </div>

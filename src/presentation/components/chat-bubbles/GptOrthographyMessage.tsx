@@ -4,11 +4,7 @@ interface Props {
   message: string
 }
 
-export const GptOrthographyMessage = ({
-  userScore,
-  errors,
-  message
-}: Props) => {
+export const GptOrthographyMessage = ({ userScore, errors, message }: Props) => {
   return (
     <div className='col-start-1 col-end-9 p-3 rounded-lg'>
       <div className='flex flex-row items-start'>
@@ -32,10 +28,9 @@ export const GptOrthographyMessage = ({
             </>
           )}
 
-          <h3 className='mt-5 mb-2'>
-            Puedes escribir otro texto en español y te ayudo con las
-            correcciones!
-          </h3>
+          <p className='mt-5 mb-2'>
+            Puedes escribir otro texto en español y te ayudo con las correcciones!
+          </p>
         </div>
       </div>
     </div>
