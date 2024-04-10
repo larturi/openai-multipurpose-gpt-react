@@ -12,6 +12,7 @@ import {
   TranslatePage
 } from '../pages'
 import { DashboardLayout } from '../layouts/DashboardLayout'
+import { AssistantTyCsPage } from '../pages/assistant/AssistantTyCsPage'
 
 export const menuRoutes = [
   {
@@ -19,6 +20,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-spell-check',
     title: 'Ortografía',
     description: 'Corregir ortografía',
+    showInMenu: true,
     component: <OrthographyPage />
   },
   {
@@ -26,6 +28,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-code-compare',
     title: 'Pros & Cons',
     description: 'Comparar pros y contras',
+    showInMenu: true,
     component: <ProsConsPage />
   },
   {
@@ -33,6 +36,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-water',
     title: 'Como stream',
     description: 'Con stream de mensajes',
+    showInMenu: true,
     component: <ProsConsStreamGeneratorPage />
   },
   {
@@ -40,6 +44,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-language',
     title: 'Traducir',
     description: 'Textos a otros idiomas',
+    showInMenu: true,
     component: <TranslatePage />
   },
   {
@@ -47,6 +52,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-podcast',
     title: 'Texto a audio',
     description: 'Convertir texto a audio',
+    showInMenu: true,
     component: <TextToAudioPage />
   },
   {
@@ -54,6 +60,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-comment-dots',
     title: 'Audio a texto',
     description: 'Convertir audio a texto',
+    showInMenu: true,
     component: <AudioToTextPage />
   },
   {
@@ -61,6 +68,7 @@ export const menuRoutes = [
     icon: 'fa-solid fa-image',
     title: 'Imágenes',
     description: 'Generar imágenes',
+    showInMenu: true,
     component: <ImageGenerationPage />
   },
   {
@@ -68,15 +76,24 @@ export const menuRoutes = [
     icon: 'fa-solid fa-wand-magic',
     title: 'Editar imagen',
     description: 'Generación continua',
+    showInMenu: true,
     component: <ImageTunningPage />
   },
-
   {
     to: '/assistant',
     icon: 'fa-solid fa-user',
-    title: 'Asistente',
-    description: 'Información del asistente',
+    title: 'Asistentes',
+    description: 'Chatear con asistentes',
+    showInMenu: true,
     component: <AssistantPage />
+  },
+  {
+    to: '/assistant/terminos-y-condiciones',
+    icon: 'fa-solid fa-user',
+    title: 'Asistentes',
+    description: 'Chatear con asistentes',
+    showInMenu: false,
+    component: <AssistantTyCsPage />
   }
 ]
 
