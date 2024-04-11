@@ -18,7 +18,7 @@ export const Card = ({ title, description, linkUrl, navigateTo }: Props) => {
 
   return (
     <>
-      <div className='min-w-[500px] p-6 border border-neutral-700 rounded-lg bg-neutral-900'>
+      <div className='md:min-w-[500px] p-6 border border-neutral-700 rounded-lg bg-neutral-900'>
         <h5 className='mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white'>
           {title}
         </h5>

@@ -29,45 +29,47 @@ export const TextMessageBoxFile = ({
   return (
     <form
       onSubmit={handleSendMessage}
-      className='flex flex-row items-center h-16 rounded-xl bg-white w-full px-4'
+      className='flex flex-col py-2 md:py-0 items-center rounded-xl bg-white px-4 md:flex-row'
     >
-      <div className='mr-3'>
-        <button
-          type='button'
-          className='flex items-center justify-center text-gray-400 hover:text-gray-600'
-          onClick={() => inputFileRef.current?.click()}
-        >
-          <i className='fa-solid fa-paperclip text-xl'></i>
-        </button>
+      <div className='flex flex-col w-full md:w-10/12 justify-start'>
+        <div className='flex'>
+          <div className='mr-4 mt-4'>
+            <button
+              type='button'
+              className='flex items-center justify-center text-gray-400 hover:text-gray-600'
+              onClick={() => inputFileRef.current?.click()}
+            >
+              <i className='fa-solid fa-paperclip text-xl'></i>
+            </button>
 
-        <input
-          type='file'
-          ref={inputFileRef}
-          accept={accept}
-          onChange={(e) => setSelectedFile(e.target.files?.item(0))}
-          hidden
-        />
-      </div>
+            <input
+              type='file'
+              ref={inputFileRef}
+              accept={accept}
+              onChange={(e) => setSelectedFile(e.target.files?.item(0))}
+              hidden
+            />
+          </div>
 
-      <div className='flex-grow'>
-        <div className='relative w-full'>
-          <input
-            type='text'
-            autoFocus
-            name='message'
-            className='flex w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10'
-            placeholder={placeholder}
-            autoComplete='off'
-            autoCorrect={disableCorrections ? 'on' : 'off'}
-            spellCheck={disableCorrections ? 'true' : 'false'}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
+          <div className='w-full'>
+            <input
+              type='text'
+              autoFocus
+              name='message'
+              className=' border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10 mb-3 mt-3 w-full'
+              placeholder={placeholder}
+              autoComplete='off'
+              autoCorrect={disableCorrections ? 'on' : 'off'}
+              spellCheck={disableCorrections ? 'true' : 'false'}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
-      <div className='ml-4'>
-        <button className='btn-primary' disabled={!selectedFile}>
+      <div className='w-full md:w-3/12 md:ml-3'>
+        <button className='btn-primary w-full' disabled={!selectedFile}>
           {!selectedFile ? (
             <span className='mr-2'>Enviar</span>
           ) : (

@@ -6,14 +6,27 @@ interface Props {
   title: string
   description: string
   showInMenu: boolean
+  setIsNavVisible: (isNavVisible: boolean) => void
 }
 
-export const SidebarMenuItem: React.FC<Props> = ({ to, icon, title, description, showInMenu }) => {
+export const SidebarMenuItem: React.FC<Props> = ({
+  to,
+  icon,
+  title,
+  description,
+  showInMenu,
+  setIsNavVisible
+}) => {
+  const handleClick = () => {
+    setIsNavVisible(false)
+  }
+
   return (
     showInMenu && (
       <NavLink
         key={to}
         to={to}
+        onClick={handleClick}
         className={({ isActive }) =>
           isActive
             ? 'flex justify-center items-center bg-gray-800 rounded-md p-2 transition-colors mt-1'

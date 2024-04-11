@@ -25,15 +25,15 @@ export const TextMessageBox = ({
   return (
     <form
       onSubmit={handleSendMessage}
-      className='flex flex-row items-center h-16 rounded-xl bg-white w-full px-4'
+      className='flex flex-col px-2 py-2 md:flex-row items-center md:h-16 rounded-xl bg-white md:w-full md:px-4'
     >
-      <div className='flex-grow'>
-        <div className='relative w-full'>
+      <div className='md:flex-grow w-full'>
+        <div className='md:relative'>
           <input
             type='text'
             autoFocus
             name='message'
-            className='flex w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10'
+            className='flex w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10 mb-3 mt-3'
             placeholder={placeholder}
             autoComplete='off'
             autoCorrect={disableCorrections ? 'on' : 'off'}
@@ -44,8 +44,8 @@ export const TextMessageBox = ({
         </div>
       </div>
 
-      <div className='ml-4'>
-        <button className='btn-primary'>
+      <div className='md:ml-4 w-full md:w-3/12'>
+        <button className='btn-primary w-full'>
           <span className='mr-2'>Enviar</span>
           <i className='fa-regular fa-paper-plane'></i>
         </button>
