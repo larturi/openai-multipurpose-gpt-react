@@ -1,4 +1,5 @@
 import { QuestionResponse } from '../../../interfaces'
+import { isTokenValid } from '../auth/is-token-valid'
 
 interface Options {
   threadId: string
@@ -11,6 +12,13 @@ export const postQuestionUseCase = async (options: Options) => {
 
   try {
     const userToken = localStorage.getItem('userToken')
+    if (!isTokenValid()) {
+      return {
+        error: true,
+        needAuth: true,
+        replies: null
+      }
+    }
 
     const resp = await fetch(`${import.meta.env.VITE_ASSISTANT_API}/tics/user-question`, {
       method: 'POST',
@@ -22,7 +30,10 @@ export const postQuestionUseCase = async (options: Options) => {
     })
 
     const replies = (await resp.json()) as QuestionResponse[]
-    return replies
+    return {
+      error: false,
+      replies
+    }
   } catch (error) {
     throw new Error('Error posting question')
   }

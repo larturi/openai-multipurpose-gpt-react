@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { GptMessage, MyMessage, TextMessageBox, TypingLoader } from '../../components'
 import { createThreadUseCase, postQuestionUseCase } from '../../../core/use-cases'
 
@@ -19,6 +21,8 @@ function cleanResponseText(text: string) {
 }
 
 export const AssistantTyCsPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [threadId, setThreadId] = useState<string>()
@@ -29,9 +33,11 @@ export const AssistantTyCsPage = () => {
     if (threadIdLocalStorage) {
       setThreadId(threadIdLocalStorage!)
     } else {
-      createThreadUseCase().then((id) => {
-        setThreadId(id)
-        localStorage.setItem('threadId', id)
+      createThreadUseCase().then((response) => {
+        if (response.needAuth) navigate('/login')
+
+        setThreadId(response.id!)
+        localStorage.setItem('threadId', response.id!)
       })
     }
   }, [])
@@ -61,7 +67,9 @@ export const AssistantTyCsPage = () => {
     })
     setIsLoading(false)
 
-    const lastMessage = replies.reverse()[0]
+    if (replies.needAuth) navigate('/login')
+
+    const lastMessage = replies.replies!.reverse()[0]
 
     setMessages((prev) => [
       ...prev,
