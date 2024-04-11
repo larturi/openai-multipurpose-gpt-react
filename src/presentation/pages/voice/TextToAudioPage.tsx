@@ -49,7 +49,6 @@ export const TextToAudioPage = () => {
       { text: message, isGpt: true, type: 'audio', audioUrl: audioUrl! }
     ])
 
-    console.log(ok, message, audioUrl)
     setIsLoading(false)
   }
 

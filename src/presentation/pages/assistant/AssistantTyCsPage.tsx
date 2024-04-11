@@ -62,7 +62,6 @@ export const AssistantTyCsPage = () => {
     setIsLoading(false)
 
     const lastMessage = replies.reverse()[0]
-    console.log(lastMessage)
 
     setMessages((prev) => [
       ...prev,

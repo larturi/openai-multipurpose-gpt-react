@@ -5,10 +5,13 @@ export async function* prosConsStreamGeneratorUseCase(prompt: string, abortSigna
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
 
   try {
+    const userToken = localStorage.getItem('userToken')
+
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/pros-cons-discusser-stream`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userToken}`
       },
       body: JSON.stringify({ prompt }),
       signal: abortSignal

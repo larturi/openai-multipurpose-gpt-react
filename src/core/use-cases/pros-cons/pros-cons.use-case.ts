@@ -2,10 +2,13 @@ import { ProsConsResponse } from '../../../interfaces'
 
 export const prosConsUseCase = async (prompt: string) => {
   try {
+    const userToken = localStorage.getItem('userToken')
+
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/pros-cons-discusser`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userToken}`
       },
       body: JSON.stringify({ prompt })
     })

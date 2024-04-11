@@ -13,6 +13,8 @@ import {
 } from '../pages'
 import { DashboardLayout } from '../layouts/DashboardLayout'
 import { AssistantTyCsPage } from '../pages/assistant/AssistantTyCsPage'
+import LoginPage from '../pages/auth/LoginPage'
+import { RequireAuth } from '../components/auth/RequireAuth'
 
 export const menuRoutes = [
   {
@@ -99,12 +101,16 @@ export const menuRoutes = [
 
 export const router = createBrowserRouter([
   {
+    path: '/login',
+    element: <LoginPage />
+  },
+  {
     path: '/',
     element: <DashboardLayout />,
     children: [
       ...menuRoutes.map((route) => ({
         path: route.to,
-        element: route.component
+        element: <RequireAuth>{route.component}</RequireAuth>
       })),
       {
         path: '',

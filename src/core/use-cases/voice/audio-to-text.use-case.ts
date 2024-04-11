@@ -7,8 +7,13 @@ export const audioToTextUseCase = async (audioFile: File, prompt?: string) => {
       formData.append('prompt', prompt)
     }
 
+    const userToken = localStorage.getItem('userToken')
+
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/audio-to-text`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${userToken}`
+      },
       body: formData
     })
 

@@ -10,10 +10,13 @@ export const postQuestionUseCase = async (options: Options) => {
   const { threadId, question, assistantId } = options
 
   try {
+    const userToken = localStorage.getItem('userToken')
+
     const resp = await fetch(`${import.meta.env.VITE_ASSISTANT_API}/tics/user-question`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userToken}`
       },
       body: JSON.stringify({ threadId, question, assistantId })
     })
