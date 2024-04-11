@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
   GptMessage,
   GptOrthographyMessage,
@@ -19,6 +21,8 @@ interface Message {
 }
 
 export const OrthographyPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -26,7 +30,9 @@ export const OrthographyPage = () => {
     setIsLoading(true)
     setMessages((prev) => [...prev, { text: text, isGpt: false }])
 
-    const { ok, errors, message, userScore } = await orthographyUseCase(text)
+    const { ok, errors, message, userScore, needAuth } = await orthographyUseCase(text)
+
+    if (needAuth) navigate('/login')
 
     if (!ok) {
       setMessages((prev) => [...prev, { text: 'No se pudo realizar la corrección', isGpt: true }])

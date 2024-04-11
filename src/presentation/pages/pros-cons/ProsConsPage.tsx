@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { GptMessage, MyMessage, TextMessageBox, TypingLoader } from '../../components'
 import { prosConsUseCase } from '../../../core/use-cases'
 
@@ -8,6 +9,8 @@ interface Message {
 }
 
 export const ProsConsPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -15,7 +18,9 @@ export const ProsConsPage = () => {
     setIsLoading(true)
     setMessages((prev) => [...prev, { text: text, isGpt: false }])
 
-    const { ok, content } = await prosConsUseCase(text)
+    const { ok, content, needAuth } = await prosConsUseCase(text)
+
+    if (needAuth) navigate('/login')
 
     if (!ok) {
       setMessages((prev) => [

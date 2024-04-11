@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { useState } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+
 import {
   GptMessage,
   MyMessage,
@@ -19,6 +22,8 @@ interface Message {
 }
 
 export const ImageTunningPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -56,21 +61,28 @@ export const ImageTunningPage = () => {
     const imageInfo = await imageGenerationUseCase(text, original, mask)
     setIsLoading(false)
 
-    if (!imageInfo) {
-      return setMessages((prev) => [...prev, { text: 'No se pudo generar la imagen', isGpt: true }])
-    }
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        text: text,
-        isGpt: true,
-        info: {
-          imageUrl: imageInfo.url,
-          alt: imageInfo.alt
-        }
+    if (typeof imageInfo == 'string') {
+      if (imageInfo === 'needAuth') navigate('/login')
+    } else {
+      if (!imageInfo) {
+        return setMessages((prev) => [
+          ...prev,
+          { text: 'No se pudo generar la imagen', isGpt: true }
+        ])
       }
-    ])
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: text,
+          isGpt: true,
+          info: {
+            imageUrl: imageInfo.url,
+            alt: imageInfo.alt
+          }
+        }
+      ])
+    }
   }
 
   return (

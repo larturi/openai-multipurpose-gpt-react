@@ -1,7 +1,15 @@
+import { isTokenValid } from '../auth/is-token-valid'
+
 export const textToVoiceUseCase = async (prompt: string, voice: string) => {
   try {
     const userToken = localStorage.getItem('userToken')
-
+    if (!isTokenValid()) {
+      return {
+        ok: false,
+        needAuth: true,
+        message: 'Invalid token'
+      }
+    }
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/text-to-audio`, {
       method: 'POST',
       headers: {

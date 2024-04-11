@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { GptMessage, MyMessage, TypingLoader, TextMessageBoxFile } from '../../components'
 import { audioToTextUseCase } from '../../../core/use-cases'
 
@@ -8,6 +10,8 @@ interface Message {
 }
 
 export const AudioToTextPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -17,6 +21,8 @@ export const AudioToTextPage = () => {
 
     const resp = await audioToTextUseCase(audioFile, text)
     setIsLoading(false)
+
+    if (resp.needAuth) navigate('/login')
 
     if (!resp) return // no hay respuesta...
 

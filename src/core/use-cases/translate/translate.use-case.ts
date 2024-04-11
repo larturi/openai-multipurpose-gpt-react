@@ -1,9 +1,19 @@
 import { TranslateResponse } from '../../../interfaces'
+import { isTokenValid } from '../auth/is-token-valid'
 
 export const translateUseCase = async (prompt: string, lang: string) => {
   try {
     const userToken = localStorage.getItem('userToken')
-
+    if (!isTokenValid()) {
+      return {
+        needAuth: true,
+        ok: false,
+        text: 'Invalid Token',
+        translation: '',
+        originalLang: '',
+        translatedLang: ''
+      }
+    }
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/translate`, {
       method: 'POST',
       headers: {

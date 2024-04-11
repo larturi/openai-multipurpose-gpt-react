@@ -1,3 +1,5 @@
+import { isTokenValid } from '../auth/is-token-valid'
+
 type GeneratedImage = Image | null
 
 interface Image {
@@ -9,9 +11,12 @@ export const imageGenerationUseCase = async (
   prompt: string,
   originalImage?: string,
   maskImage?: string
-): Promise<GeneratedImage> => {
+): Promise<GeneratedImage | string> => {
   try {
     const userToken = localStorage.getItem('userToken')
+    if (!isTokenValid()) {
+      return 'needAuth'
+    }
 
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/image-generation`, {
       method: 'POST',

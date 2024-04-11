@@ -1,8 +1,16 @@
 import { ProsConsResponse } from '../../../interfaces'
+import { isTokenValid } from '../auth/is-token-valid'
 
 export const prosConsUseCase = async (prompt: string) => {
   try {
     const userToken = localStorage.getItem('userToken')
+    if (!isTokenValid()) {
+      return {
+        ok: false,
+        content: 'Invalid token',
+        needAuth: true
+      }
+    }
 
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/pros-cons-discusser`, {
       method: 'POST',

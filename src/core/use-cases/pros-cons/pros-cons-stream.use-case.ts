@@ -1,8 +1,13 @@
 /* eslint-disable no-constant-condition */
 
+import { isTokenValid } from '../auth/is-token-valid'
+
 export const prosConsStreamUseCase = async (prompt: string) => {
   try {
     const userToken = localStorage.getItem('userToken')
+    if (!isTokenValid()) {
+      return null
+    }
 
     const resp = await fetch(`${import.meta.env.VITE_GPT_API}/pros-cons-discusser-stream`, {
       method: 'POST',

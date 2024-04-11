@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { GptMessage, MyMessage, TypingLoader, TextMessageBoxSelect } from '../../components'
 import { translateUseCase } from '../../../core/use-cases/translate/translate.use-case'
 
@@ -21,6 +23,8 @@ const languages = [
 ]
 
 export const TranslatePage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -30,7 +34,8 @@ export const TranslatePage = () => {
     const newMessage = `Traduce ${text} al idioma ${selectedLanguaje}`
     setMessages((prev) => [...prev, { text: newMessage, isGpt: false }])
 
-    const { ok, translation: message } = await translateUseCase(text, selectedLanguaje)
+    const { ok, translation: message, needAuth } = await translateUseCase(text, selectedLanguaje)
+    if (needAuth) navigate('/login')
 
     if (!ok) {
       setMessages((prev) => [...prev, { text: 'No se pudo realizar la traducción', isGpt: true }])

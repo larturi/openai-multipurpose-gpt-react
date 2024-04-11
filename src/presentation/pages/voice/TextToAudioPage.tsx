@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
   GptMessage,
   MyMessage,
@@ -33,6 +35,8 @@ const voices = [
 ]
 
 export const TextToAudioPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -40,7 +44,8 @@ export const TextToAudioPage = () => {
     setIsLoading(true)
     setMessages((prev) => [...prev, { text: text, isGpt: false, type: 'text' }])
 
-    const { ok, message, audioUrl } = await textToVoiceUseCase(text, selectedVoice)
+    const { ok, message, audioUrl, needAuth } = await textToVoiceUseCase(text, selectedVoice)
+    if (needAuth) navigate('/login')
 
     if (!ok) return
 

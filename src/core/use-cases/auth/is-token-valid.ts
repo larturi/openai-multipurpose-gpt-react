@@ -1,10 +1,4 @@
-import { Navigate } from 'react-router-dom'
-
-interface RequireAuthProps {
-  children: React.ReactNode
-}
-
-const isAuthenticated = () => {
+export const isTokenValid = () => {
   const token = localStorage.getItem('userToken')
   if (!token) return false
 
@@ -16,9 +10,9 @@ const isAuthenticated = () => {
 
   try {
     const payload = JSON.parse(window.atob(parts[1]))
-    const now = Date.now() / 1000
+    const now = Date.now() / 1000 // Tiempo actual en segundos
     if (payload.exp < now) {
-      // El token ha caducado
+      // El token ha expirado
       localStorage.removeItem('userToken')
       return false
     }
@@ -28,14 +22,5 @@ const isAuthenticated = () => {
     return false
   }
 
-  return true
-}
-
-export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
-  if (!isAuthenticated()) {
-    // Usuario no autenticado, redirigir a la página de login
-    return <Navigate to='/login' />
-  }
-
-  return children
+  return true // El token es válido
 }

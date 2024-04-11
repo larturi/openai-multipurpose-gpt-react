@@ -2,9 +2,17 @@ import { Outlet } from 'react-router-dom'
 import { menuRoutes } from '../router/router'
 import { SidebarMenuItem } from '../components'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const DashboardLayout = () => {
+  const navigate = useNavigate()
+
   const [isNavVisible, setIsNavVisible] = useState(false)
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken')
+    navigate('/')
+  }
 
   return (
     <main className='flex flex-row mt-7'>
@@ -17,11 +25,19 @@ export const DashboardLayout = () => {
 
       {/* Desktop Sidebar */}
       <nav className='hidden lg:flex flex-col ml-5 w-[400px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl'>
-        <h1 className='font-bold text-lg lg:text-3xl text-gray-400 bg-clip-text'>
+        <h1 className='font-bold text-lg lg:text-2xl text-gray-400 bg-clip-text'>
           ReactGPT
           <span className='text-indigo-600'>.</span>
         </h1>
-        <span className='text-xl'>Bienvenido</span>
+
+        <div className='flex justify-between'>
+          <p className='text-lg'>Bienvenido</p>
+          <span>
+            <button onClick={handleLogout} className='btn-primary'>
+              Logout
+            </button>
+          </span>
+        </div>
 
         <div className='border-gray-700 border my-3' />
 

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
   GptMessage,
   GptMessageImage,
@@ -20,6 +22,8 @@ interface Message {
 }
 
 export const ImageGenerationPage = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -28,23 +32,31 @@ export const ImageGenerationPage = () => {
     setMessages((prev) => [...prev, { text: text, isGpt: false }])
 
     const imageInfo = await imageGenerationUseCase(text)
-    setIsLoading(false)
 
-    if (!imageInfo?.url) {
-      return setMessages((prev) => [...prev, { text: 'No se pudo generar la imagen', isGpt: true }])
-    }
+    if (typeof imageInfo == 'string') {
+      if (imageInfo === 'needAuth') navigate('/login')
+    } else {
+      setIsLoading(false)
 
-    return setMessages((prev) => [
-      ...prev,
-      {
-        text: text,
-        isGpt: true,
-        info: {
-          imageUrl: imageInfo.url,
-          alt: imageInfo.alt
-        }
+      if (!imageInfo?.url) {
+        return setMessages((prev) => [
+          ...prev,
+          { text: 'No se pudo generar la imagen', isGpt: true }
+        ])
       }
-    ])
+
+      return setMessages((prev) => [
+        ...prev,
+        {
+          text: text,
+          isGpt: true,
+          info: {
+            imageUrl: imageInfo.url,
+            alt: imageInfo.alt
+          }
+        }
+      ])
+    }
   }
 
   return (
