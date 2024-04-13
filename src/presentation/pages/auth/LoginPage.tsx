@@ -1,24 +1,53 @@
 import { useNavigate } from 'react-router-dom'
 import { loginUseCase } from '../../../core/use-cases/auth/login.use-case'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const LoginPage = () => {
   const navigate = useNavigate()
 
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setIsLoading(true)
 
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    const { login, access_token } = await loginUseCase(email, password)
+    setShowErrorMessage(false)
 
-    if (login && access_token) {
-      localStorage.setItem('userToken', access_token)
-      navigate('/')
+    if (email === '' || password === '') {
+      setErrorMessage('Debe ingresar usuario y password')
+      setShowErrorMessage(true)
+      setIsLoading(false)
+      return
+    }
+
+    try {
+      const { login, access_token } = await loginUseCase(email, password)
+
+      if (login && access_token) {
+        localStorage.setItem('userToken', access_token)
+        navigate('/')
+      } else {
+        setErrorMessage('Usuario y/o password incorrectos')
+        setShowErrorMessage(true)
+      }
+    } catch (error) {
+      setErrorMessage('Error al intentar iniciar sesión. Por favor, inténtalo de nuevo.')
+      setShowErrorMessage(true)
+    } finally {
+      setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    setShowErrorMessage(false)
+  }, [])
 
   useEffect(() => {
     const userToken = localStorage.getItem('userToken')
@@ -69,10 +98,30 @@ const LoginPage = () => {
                 <button
                   type='submit'
                   className='w-full text-white bg-indigo-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800'
+                  disabled={isLoading}
                 >
-                  Sign in
+                  {isLoading ? (
+                    <div className='flex justify-center'>
+                      <span
+                        className={`fa-solid fa-spinner text-indigo-400
+                         mr-4 min-w-[35px] flex justify-center ml-1 text-sm animate-spin`}
+                      ></span>
+                    </div>
+                  ) : (
+                    <span>Sign in</span>
+                  )}
                 </button>
               </form>
+
+              <div className='flex justify-center align-middle w-full'>
+                <p
+                  className={`
+                    text-sm font-semibold w-full py-3 rounded-md bg-purple-700 
+                    text-white text-center ${showErrorMessage ? 'block' : 'hidden'}`}
+                >
+                  {errorMessage}
+                </p>
+              </div>
             </div>
           </div>
         </div>
