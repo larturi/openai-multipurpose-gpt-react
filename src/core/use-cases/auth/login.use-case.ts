@@ -1,8 +1,8 @@
 export const loginUseCase = async (email: string, password: string) => {
-  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+  // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
   try {
-    await delay(4000)
+    // await delay(4000)
 
     const resp = await fetch(`${import.meta.env.VITE_AUTH_API}/login`, {
       method: 'POST',
