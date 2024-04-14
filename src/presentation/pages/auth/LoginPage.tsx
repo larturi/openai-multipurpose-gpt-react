@@ -28,6 +28,9 @@ const LoginPage = () => {
     }
 
     try {
+      setErrorMessage('El primer login puede demorar hasta un minuto')
+      setShowErrorMessage(true)
+
       const { login, access_token } = await loginUseCase(email, password)
 
       if (login && access_token) {
@@ -57,7 +60,7 @@ const LoginPage = () => {
   return (
     <div>
       <section className='bg-gray-900'>
-        <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0'>
+        <div className='flex flex-col items-center justify-center lg:px-6 lg:py-0 px-3 py-3 mx-auto h-screen '>
           <div className='w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700'>
             <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
               <h1 className='text-xl font-bold leading-tight tracking-tight md:text-3xl text-white'>
@@ -81,7 +84,7 @@ const LoginPage = () => {
                     name='email'
                     id='email'
                     className='border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
-                    placeholder='name@company.com'
+                    placeholder='name@email.com'
                   />
                 </div>
                 <div>
